@@ -14,11 +14,11 @@ public class Producto {
     @GeneratedValue(generator = "UUID")
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
-
     private String nombre;
     private Double precioCompra;
     private Double precioVenta;
     private Integer existencias;
+    private String linkImagen;
 
     public UUID getId() {
         return id;
@@ -58,6 +58,14 @@ public class Producto {
 
     public void setExistencias(Integer existencias) {
         this.existencias = existencias;
+    }
+
+    public String getLinkImagen() {
+        return linkImagen;
+    }
+
+    public void setLinkImagen(String linkImagen) {
+        this.linkImagen = linkImagen;
     }
 
 }
