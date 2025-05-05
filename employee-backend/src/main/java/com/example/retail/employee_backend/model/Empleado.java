@@ -1,28 +1,23 @@
 package com.example.retail.employee_backend.model;
 
+import java.util.UUID;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class Empleado {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 
     private String nombre;
-    private String puesto;
-    private Double salario;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String apellido;
+    private String rol;
 
     public String getNombre() {
         return nombre;
@@ -32,20 +27,28 @@ public class Empleado {
         this.nombre = nombre;
     }
 
-    public String getPuesto() {
-        return puesto;
+    public String getApellido() {
+        return apellido;
     }
 
-    public void setPuesto(String puesto) {
-        this.puesto = puesto;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
-    public Double getSalario() {
-        return salario;
+    public String getRol() {
+        return rol;
     }
 
-    public void setSalario(Double salario) {
-        this.salario = salario;
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
 }

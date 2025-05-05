@@ -4,8 +4,8 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.retail.employee_backend.model.Empleado;
+import com.example.retail.employee_backend.model.Producto;
 
-public interface EmpleadoRepository extends JpaRepository<Empleado, UUID> {
+public interface ProductoRepository extends JpaRepository<Producto, UUID> {
 
 }
