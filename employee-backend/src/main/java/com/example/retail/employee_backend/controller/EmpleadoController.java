@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.retail.employee_backend.model.Empleado;
-import com.example.retail.employee_backend.repository.EmpleadoRepository;
+import com.example.retail.employee_backend.service.EmpleadoService;
 
 import java.util.List;
 
@@ -17,19 +17,17 @@ import java.util.List;
 public class EmpleadoController {
 
     @Autowired
-    private final EmpleadoRepository empleadoRepository;
+    private EmpleadoService empleadoService;
 
-    public EmpleadoController(EmpleadoRepository empleadoRepository) {
-        this.empleadoRepository = empleadoRepository;
-    }
-
-    @GetMapping
+    @GetMapping(("/findAll"))
     public List<Empleado> getAllEmpleados() {
-        return empleadoRepository.findAll();
+        return empleadoService.getAllEmpleados();
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public Empleado createEmpleado(@RequestBody Empleado empleado) {
-        return empleadoRepository.save(empleado);
+        empleadoService.save(empleado);
+        // CAMBIAR ESTE RETORNO A UNA REDIRECCIÓN
+        return empleado;
     }
 }
