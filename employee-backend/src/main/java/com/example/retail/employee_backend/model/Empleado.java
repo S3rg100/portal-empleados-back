@@ -2,10 +2,12 @@ package com.example.retail.employee_backend.model;
 
 import java.util.UUID;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Empleado {
@@ -18,6 +20,9 @@ public class Empleado {
     private String nombre;
     private String apellido;
     private String rol;
+
+    @OneToOne(mappedBy = "empleado",cascade=CascadeType.ALL)
+    private EmpleadoLogin login;
 
     public String getNombre() {
         return nombre;
@@ -49,6 +54,17 @@ public class Empleado {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public EmpleadoLogin getAuth() {
+        return login;
+    }
+
+        public void setAuth(EmpleadoLogin login) {
+        this.login = login;
+        if (login != null) {
+            login.setEmpleado(this);
+        }
     }
 
 }
