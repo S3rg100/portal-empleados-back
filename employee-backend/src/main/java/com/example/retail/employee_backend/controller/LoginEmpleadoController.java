@@ -23,11 +23,11 @@ public class LoginEmpleadoController {
 
     @Autowired
     private JWTGenerator jwtGenerator;
-
+    /* 
     @GetMapping("login-empleado")
     public String showLoginPage() {
         return "login_empleado";
-    }
+    }*/
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> loginEmpleado(@RequestBody LoginRequestDTO loginRequest) {
@@ -43,7 +43,7 @@ public class LoginEmpleadoController {
 
             return ResponseEntity.ok(new AuthResponseDTO(token));
         } catch (AuthenticationException ex) {
-            return ResponseEntity.status(401).body(null);
+            return ResponseEntity.status(403).body(null);
         }
     }
 }
