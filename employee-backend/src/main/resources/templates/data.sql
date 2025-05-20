@@ -4,7 +4,7 @@ VALUES ('1e8e4010-0000-0000-0000-000000000001', 'Juan', 'Pérez', 'ADMIN');
 
 -- Insertar Login usando ese id
 INSERT INTO empleado_login (username, password, empleado_id)
-VALUES ('juan', '$2a$10$5eB3vJ2x6ZcyLkENL/NyXut1Ed2b.GiI.CEGwH24EoKljsdZz/AuC', '1e8e4010-0000-0000-0000-000000000001');
+VALUES ('juan', '$2a$12$qWjBi19NLmgPDz2UrYnEJ.6o8AszWb.rn2jJqnkcNSGY8XojhGenK', '1e8e4010-0000-0000-0000-000000000001');
 
 producto
 producto/add
