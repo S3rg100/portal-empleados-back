@@ -33,5 +33,6 @@ CREATE TABLE producto (
     precio_compra DOUBLE PRECISION,
     precio_venta DOUBLE PRECISION,
     existencias INTEGER,
-    link_imagen VARCHAR(255)
+    link_imagen VARCHAR(255),
+    categoria VARCHAR(255)
 );

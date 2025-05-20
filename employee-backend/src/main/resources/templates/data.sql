@@ -13,5 +13,6 @@ producto/add
   "precioCompra": 15.50,
   "precioVenta": 29.99,
   "existencias": 100,
-  "linkImagen": "https://example.com/imagenes/camisa.jpg"
+  "linkImagen": "https://example.com/imagenes/camisa.jpg",
+  "categoria": "Ropa"
 }

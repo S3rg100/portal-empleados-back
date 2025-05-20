@@ -1,24 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
+    <link rel="stylesheet" href="/css/login.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <h2>Login</h2>
-    <form action="/login-empleado" method="post">
-      <label for="username">Username:</label><br />
-      <input type="text" id="username" name="username" required /><br /><br />
+    <div class="container">
+      <h2>Login</h2>
+      <form action="/login-empleado" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required />
 
-      <label for="password">Password:</label><br />
-      <input
-        type="password"
-        id="password"
-        name="password"
-        required
-      /><br /><br />
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required />
 
-      <button type="submit">Login</button>
-    </form>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+    <script th:src="@{/js/login_empleado.js}"></script>
   </body>
-  <script th:src="@{/js/login_empleado.js}"></script>
 </html>
