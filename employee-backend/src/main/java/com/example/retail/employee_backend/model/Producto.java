@@ -19,6 +19,7 @@ public class Producto {
     private Double precioVenta;
     private Integer existencias;
     private String linkImagen;
+    private String categoria;
 
     public UUID getId() {
         return id;
@@ -66,6 +67,14 @@ public class Producto {
 
     public void setLinkImagen(String linkImagen) {
         this.linkImagen = linkImagen;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
 }
