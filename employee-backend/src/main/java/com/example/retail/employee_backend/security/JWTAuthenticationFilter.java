@@ -1,9 +1,12 @@
 package com.example.retail.employee_backend.security;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -21,9 +24,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JWTGenerator jwtGenerator;
 
-    @Autowired
-    private CustomUserDetailService userDetailsService;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request,
             HttpServletResponse response,
@@ -31,22 +31,34 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String token = getJWT(request);
+        System.out.println("[DEBUG] Token recibido: " + token);
 
-        if (token != null && SecurityContextHolder.getContext().getAuthentication() == null && jwtGenerator.validateToken(token)) {
-            String username = jwtGenerator.extractUsermane(token);
+        if (token != null &&
+            SecurityContextHolder.getContext().getAuthentication() == null &&
+            jwtGenerator.validateToken(token)) {
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            String username = jwtGenerator.extractUsername(token);
+            System.out.println("[DEBUG] Username extraído: " + username);
+            List<String> roles = jwtGenerator.extractRoles(token); // 👈 método nuevo
+            System.out.println("[DEBUG] Roles extraídos: " + roles);
 
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.getAuthorities());
+            List<SimpleGrantedAuthority> authorities = roles.stream()
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
 
-            authenticationToken.setDetails(
-                    new WebAuthenticationDetailsSource().buildDetails(request));
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                    username, null, authorities);
 
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authToken);
+
+            System.out.println("[DEBUG] Token recibido: " + token);
+            System.out.println("[DEBUG] Usuario autenticado: " + username);
+            System.out.println("[DEBUG] Roles: " + roles);
         }
 
         filterChain.doFilter(request, response);
+        
     }
 
     private String getJWT(HttpServletRequest request) {
@@ -60,6 +72,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getServletPath();
-        return path.startsWith("/auth/login") || path.startsWith("/h2") || path.startsWith("/login-empleado");
+        return path.startsWith("/login") || path.startsWith("/h2") || path.startsWith("/login-empleado");
     }
 }
