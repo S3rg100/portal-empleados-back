@@ -3,6 +3,7 @@ package com.example.retail.employee_backend.services;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -25,6 +26,12 @@ public class IntegracionDeliveryServiceImpl implements IntegracionDeliveryServic
 
         HttpEntity<DeliveryDataDTO> request = new HttpEntity<>(dataDTO, headers);
         restTemplate.postForEntity(url, request, Void.class);
+    }
+
+    @Override
+    public ResponseEntity<DeliveryDataDTO> getPedido(String id) {
+        String url = "http://10.43.103.202:5125/api/Pedido/codigo/{codigo}";
+        return restTemplate.getForEntity(url, DeliveryDataDTO.class, id);
     }
 
 }

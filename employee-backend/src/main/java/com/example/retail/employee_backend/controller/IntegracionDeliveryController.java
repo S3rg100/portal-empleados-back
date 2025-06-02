@@ -1,14 +1,19 @@
 package com.example.retail.employee_backend.controller;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.retail.employee_backend.dto.DeliveryDataDTO;
+import com.example.retail.employee_backend.model.Producto;
 import com.example.retail.employee_backend.services.IntegracionDeliveryService;
 
 @RestController
@@ -31,6 +36,11 @@ public class IntegracionDeliveryController {
         integracionDeliveryService.enviarPedido(deliveryData);
 
         return ResponseEntity.ok("Pedido recibido y reenviado correctamente");
+    }
+
+    @GetMapping("/pedido-estado/{id}")
+    public ResponseEntity<DeliveryDataDTO> getEstadoPedido(@PathVariable UUID id) {
+        return integracionDeliveryService.getPedido(id.toString());
     }
 
 }
