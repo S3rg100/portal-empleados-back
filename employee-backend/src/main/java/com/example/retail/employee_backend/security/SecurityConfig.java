@@ -30,7 +30,8 @@ public class SecurityConfig {
                     "/html/**",
                     "/css/**",
                     "/js/**",
-                    "/producto/**" // ✅ Permitido sin autenticación
+                    "/producto/**",
+                    "/api/**" // ✅ Permitido sin autenticación
                 ).permitAll()
                 .anyRequest().permitAll()
             );

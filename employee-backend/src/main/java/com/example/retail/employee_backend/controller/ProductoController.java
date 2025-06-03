@@ -23,7 +23,8 @@ public class ProductoController {
     }
 
     // === GET ALL ===
-    @GetMapping
+
+    @GetMapping("/findAll")
     public List<Producto> getAllProductos() {
         return productoRepository.findAll();
     }
@@ -35,7 +36,7 @@ public class ProductoController {
     }
 
     // === GET BY ID ===
-    @GetMapping("/{id}")
+    @GetMapping("/find/{id}")
     public ResponseEntity<Producto> getProductoById(@PathVariable UUID id) {
         return productoRepository.findById(id)
                 .map(ResponseEntity::ok)
