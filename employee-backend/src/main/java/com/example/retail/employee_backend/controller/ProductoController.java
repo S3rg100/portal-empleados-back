@@ -5,49 +5,45 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.retail.employee_backend.model.Producto;
 import com.example.retail.employee_backend.repository.ProductoRepository;
 
 @RestController
 @RequestMapping("/producto")
+@CrossOrigin(origins = "*") // 🔁 Asegura que el frontend pueda acceder desde otro dominio
 public class ProductoController {
 
-    @Autowired
     private final ProductoRepository productoRepository;
 
+    @Autowired
     public ProductoController(ProductoRepository productoRepository) {
         this.productoRepository = productoRepository;
     }
 
-    @GetMapping("/findAll")
+    // === GET ALL ===
+    @GetMapping
     public List<Producto> getAllProductos() {
         return productoRepository.findAll();
     }
 
-    @PostMapping("/add")
+    // === CREATE ===
+    @PostMapping
     public Producto createProducto(@RequestBody Producto producto) {
         return productoRepository.save(producto);
     }
 
-    // Get product by Id
-    @GetMapping("/find/{id}")
+    // === GET BY ID ===
+    @GetMapping("/{id}")
     public ResponseEntity<Producto> getProductoById(@PathVariable UUID id) {
         return productoRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Update
-    @PutMapping("/update/{id}")
+    // === UPDATE ===
+    @PutMapping("/{id}")
     public ResponseEntity<Producto> updateProducto(@PathVariable UUID id, @RequestBody Producto productoDetails) {
         return productoRepository.findById(id)
                 .map(producto -> {
@@ -55,14 +51,14 @@ public class ProductoController {
                     producto.setPrecioCompra(productoDetails.getPrecioCompra());
                     producto.setPrecioVenta(productoDetails.getPrecioVenta());
                     producto.setExistencias(productoDetails.getExistencias());
-                    Producto updatedProducto = productoRepository.save(producto);
-                    return ResponseEntity.ok(updatedProducto);
+                    producto.setLinkImagen(productoDetails.getLinkImagen());
+                    return ResponseEntity.ok(productoRepository.save(producto));
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Delete
-    @DeleteMapping("/delete/{id}")
+    // === DELETE ===
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProducto(@PathVariable UUID id) {
         return productoRepository.findById(id)
                 .map(producto -> {
@@ -71,5 +67,4 @@ public class ProductoController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
-
 }

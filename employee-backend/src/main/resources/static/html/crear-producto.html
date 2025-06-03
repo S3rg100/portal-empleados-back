@@ -1,35 +1,172 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Agregar Producto</title>
-  <link rel="stylesheet" href="../css/estilos.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      display: flex;
+      background-color: #f5f7fa;
+    }
+
+    .sidebar {
+      width: 240px;
+      background-color: #2c3e50;
+      color: white;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      margin: 10px 0;
+      padding: 8px;
+      border-radius: 4px;
+    }
+
+    .sidebar a:hover {
+      background-color: #34495e;
+    }
+
+    .content {
+      flex: 1;
+      padding: 40px;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+    }
+
+    .subtitulo {
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .formulario {
+      background-color: #dceff3;
+      padding: 30px;
+      border-radius: 8px;
+      max-width: 700px;
+    }
+
+    .formulario label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .formulario input, .formulario select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: #2c3e50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1a252f;
+    }
+
+    .exito {
+      background-color: #28a745;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 4px;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Agregar Nuevo Producto</h1>
-    <form id="form-crear">
-      <label>Nombre del producto:</label>
-      <input type="text" id="nombre" required><br>
 
-      <label>Precio de compra:</label>
-      <input type="number" id="precioCompra" required><br>
-
-      <label>Precio de venta:</label>
-      <input type="number" id="precioVenta" required><br>
-
-      <label>Existencias:</label>
-      <input type="number" id="existencias" required><br>
-
-      <label>Link de imagen (opcional):</label>
-      <input type="text" id="linkImagen"><br>
-
-      <button type="submit">Guardar Producto</button>
-    </form>
-    <p id="mensaje"></p>
+  <div class="sidebar">
+    <h2>Producto</h2>
+    <a href="/html/crear-producto.html">➕ Agregar producto</a>
+    <a href="/html/detalle-producto.html">🔎 Detalles del producto</a>
+    <a href="/html/editar-producto.html">✏️ Editar producto</a>
   </div>
 
-  <script src="../js/api.js"></script>
-  <script src="../js/crear-producto.js"></script>
+  <div class="content">
+    <div class="breadcrumb">Producto / Agregar Producto</div>
+    <h1>Agregar Producto</h1>
+    <p class="subtitulo">Completa el siguiente formulario para registrar un nuevo producto en el sistema. Asegúrate de ingresar la información correctamente.</p>
+
+    <form id="formulario" class="formulario">
+      <label for="nombre">Nombre</label>
+      <input type="text" id="nombre" required />
+
+      <label for="precioVenta">Precio Venta</label>
+      <input type="number" id="precioVenta" required />
+
+      <label for="precioCompra">Precio Compra</label>
+      <input type="number" id="precioCompra" required />
+
+      <label for="existencias">Existencias</label>
+      <input type="number" id="existencias" required />
+
+      <label for="linkImagen">Link Imagen</label>
+      <input type="text" id="linkImagen" />
+
+      <label for="categoria">Categoría</label>
+      <input type="text" id="categoria" />
+
+      <button type="submit">Guardar</button>
+    </form>
+
+    <div class="exito" id="mensajeExito">
+      ✅ Producto guardado de forma satisfactoria
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("formulario").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const data = {
+        nombre: document.getElementById("nombre").value,
+        precioCompra: parseFloat(document.getElementById("precioCompra").value),
+        precioVenta: parseFloat(document.getElementById("precioVenta").value),
+        existencias: parseInt(document.getElementById("existencias").value),
+        linkImagen: document.getElementById("linkImagen").value,
+        categoria: document.getElementById("categoria").value
+      };
+
+      fetch('/producto', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }).then(() => {
+        document.getElementById("mensajeExito").style.display = "block";
+        document.getElementById("formulario").reset();
+      }).catch(() => {
+        alert("Error al guardar el producto.");
+      });
+    });
+  </script>
+
 </body>
 </html>

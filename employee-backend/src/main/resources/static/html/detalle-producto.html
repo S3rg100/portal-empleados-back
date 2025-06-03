@@ -3,22 +3,190 @@
 <head>
   <meta charset="UTF-8" />
   <title>Detalles del Producto</title>
-  <link rel="stylesheet" href="../css/estilos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      display: flex;
+      background-color: #f5f7fa;
+    }
+
+    .sidebar {
+      width: 240px;
+      background-color: #2c3e50;
+      color: white;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      margin: 10px 0;
+      padding: 8px;
+      border-radius: 4px;
+    }
+
+    .sidebar a:hover {
+      background-color: #34495e;
+    }
+
+    .content {
+      flex: 1;
+      padding: 40px;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+    }
+
+    .subtitulo {
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .buscar-id {
+      margin-bottom: 20px;
+    }
+
+    .buscar-id input {
+      padding: 10px;
+      width: 300px;
+      margin-right: 10px;
+    }
+
+    .buscar-id button {
+      padding: 10px 20px;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .detalle-box {
+      background-color: #dceff3;
+      padding: 30px;
+      border-radius: 8px;
+      max-width: 900px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .formulario label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .formulario input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #f9f9f9;
+      color: #555;
+    }
+
+    .imagen {
+      text-align: center;
+    }
+
+    .imagen img {
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
+
+  <div class="sidebar">
+    <h2>Producto</h2>
+    <a href="/html/crear-producto.html">➕ Agregar producto</a>
+    <a href="/html/detalle-producto.html">🔎 Detalles del producto</a>
+    <a href="/html/editar-producto.html">✏️ Editar producto</a>
+  </div>
+
+  <div class="content">
+    <div class="breadcrumb">Producto / Detalles del Producto</div>
     <h1>Detalles del Producto</h1>
-    <div id="info-producto">
-      <p><strong>ID:</strong> <span id="id"></span></p>
-      <p><strong>Nombre:</strong> <span id="nombre"></span></p>
-      <p><strong>Precio de Compra:</strong> <span id="precioCompra"></span></p>
-      <p><strong>Precio de Venta:</strong> <span id="precioVenta"></span></p>
-      <p><strong>Existencias:</strong> <span id="existencias"></span></p>
-      <p><strong>Imagen:</strong><br><img id="imagen" src="" width="200" /></p>
+    <p class="subtitulo">Consulta a continuación la información detallada del producto. Ingresa el ID para ver su información.</p>
+
+    <div class="buscar-id">
+      <input type="text" id="buscarId" placeholder="Ingrese ID del producto" />
+      <button onclick="buscarProducto()">Buscar</button>
+    </div>
+
+    <div class="detalle-box">
+      <div class="formulario">
+        <label>ID</label>
+        <input type="text" id="id" readonly />
+        <label>Nombre</label>
+        <input type="text" id="nombre" readonly />
+        <label>Precio Venta</label>
+        <input type="text" id="precioVenta" readonly />
+        <label>Precio Compra</label>
+        <input type="text" id="precioCompra" readonly />
+        <label>Existencias</label>
+        <input type="text" id="existencias" readonly />
+        <label>Categoría</label>
+        <input type="text" id="categoria" readonly />
+      </div>
+      <div class="imagen">
+        <img id="imagenProducto" src="" alt="Imagen del producto" />
+      </div>
     </div>
   </div>
 
-  <script src="../js/api.js"></script>
-  <script src="../js/detalle-producto.js"></script>
+  <script>
+    function buscarProducto() {
+      const id = document.getElementById("buscarId").value.trim();
+      if (!id) {
+        alert("Por favor ingresa un ID de producto.");
+        return;
+      }
+
+      fetch(`/producto/${id}`)
+        .then(res => {
+          if (!res.ok) throw new Error("Producto no encontrado.");
+          return res.json();
+        })
+        .then(p => {
+          document.getElementById('id').value = p.id;
+          document.getElementById('nombre').value = p.nombre;
+          document.getElementById('precioVenta').value = `$ ${p.precioVenta.toLocaleString()}`;
+          document.getElementById('precioCompra').value = `$ ${p.precioCompra.toLocaleString()}`;
+          document.getElementById('existencias').value = p.existencias;
+          document.getElementById('categoria').value = p.categoria || 'N/A';
+          document.getElementById('imagenProducto').src = p.linkImagen || '';
+        })
+        .catch(err => {
+          alert(err.message);
+          document.getElementById('id').value = '';
+          document.getElementById('nombre').value = '';
+          document.getElementById('precioVenta').value = '';
+          document.getElementById('precioCompra').value = '';
+          document.getElementById('existencias').value = '';
+          document.getElementById('categoria').value = '';
+          document.getElementById('imagenProducto').src = '';
+        });
+    }
+  </script>
+
 </body>
 </html>
