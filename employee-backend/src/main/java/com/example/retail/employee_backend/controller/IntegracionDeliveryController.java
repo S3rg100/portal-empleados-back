@@ -36,17 +36,14 @@ public class IntegracionDeliveryController {
 
     @PostMapping("/pedido")
     public ResponseEntity<String> recibirPedido(@RequestBody DeliveryDataDTO deliveryData) {
+        // For now, just print it or log it
         System.out.println("Pedido recibido:");
         System.out.println("ID: " + deliveryData.getId());
         System.out.println("Cédula: " + deliveryData.getCedula());
         System.out.println("Productos: " + deliveryData.getProductos().size());
 
-        // Obtener el producto y actualizar stock
-        Producto producto = productoRepository.findById(deliveryData.getId()).get();
-        producto.setExistencias(producto.getExistencias() - 1);
-        productoRepository.save(producto);
-
         // Redireccion a delivery
+
         integracionDeliveryService.enviarPedido(deliveryData);
 
         return ResponseEntity.ok("Pedido recibido y reenviado correctamente");
