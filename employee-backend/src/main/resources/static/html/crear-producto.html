@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Agregar Producto</title>
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Agregar Nuevo Producto</h1>
+    <form id="form-crear">
+      <label>Nombre del producto:</label>
+      <input type="text" id="nombre" required><br>
+
+      <label>Precio de compra:</label>
+      <input type="number" id="precioCompra" required><br>
+
+      <label>Precio de venta:</label>
+      <input type="number" id="precioVenta" required><br>
+
+      <label>Existencias:</label>
+      <input type="number" id="existencias" required><br>
+
+      <label>Link de imagen (opcional):</label>
+      <input type="text" id="linkImagen"><br>
+
+      <button type="submit">Guardar Producto</button>
+    </form>
+    <p id="mensaje"></p>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/crear-producto.js"></script>
+</body>
+</html>

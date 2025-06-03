@@ -1,0 +1,102 @@
+/* Estilo base */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+/* Contenedor principal */
+.container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezados */
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+/* Formularios */
+form label {
+  display: block;
+  margin: 0.5rem 0 0.25rem;
+  color: #555;
+}
+
+form input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+form button {
+  width: 100%;
+  padding: 0.7rem;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+form button:hover {
+  background-color: #0056b3;
+}
+
+/* Mensajes */
+#mensaje {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: green;
+}
+
+/* Tablas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+th, td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #007bff;
+  color: white;
+}
+
+td button {
+  margin-right: 5px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+td button:hover {
+  background-color: #0056b3;
+}
+
+/* Imagen en detalle */
+img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  max-width: 100%;
+  height: auto;
+}
