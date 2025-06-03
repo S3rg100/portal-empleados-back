@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.retail.employee_backend.dto.DeliveryDataDTO;
+import com.example.retail.employee_backend.dto.RetailDataDTO;
 
 @Service
 public class IntegracionDeliveryServiceImpl implements IntegracionDeliveryService {
@@ -29,9 +30,9 @@ public class IntegracionDeliveryServiceImpl implements IntegracionDeliveryServic
     }
 
     @Override
-    public ResponseEntity<DeliveryDataDTO> getPedido(String id) {
+    public ResponseEntity<RetailDataDTO> getPedido(String id) {
         String url = "http://10.43.103.202:5125/api/Pedido/codigo/{codigo}";
-        return restTemplate.getForEntity(url, DeliveryDataDTO.class, id);
+        return restTemplate.getForEntity(url, RetailDataDTO.class, id);
     }
 
 }

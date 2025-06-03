@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.retail.employee_backend.dto.DeliveryDataDTO;
+import com.example.retail.employee_backend.dto.RetailDataDTO;
 import com.example.retail.employee_backend.model.Producto;
 import com.example.retail.employee_backend.services.IntegracionDeliveryService;
 
@@ -39,7 +40,7 @@ public class IntegracionDeliveryController {
     }
 
     @GetMapping("/pedido-estado/{id}")
-    public ResponseEntity<DeliveryDataDTO> getEstadoPedido(@PathVariable UUID id) {
+    public ResponseEntity<RetailDataDTO> getEstadoPedido(@PathVariable UUID id) {
         return integracionDeliveryService.getPedido(id.toString());
     }
 
